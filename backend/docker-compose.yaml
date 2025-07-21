@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database Service
+  db:
+    image: postgres:15
+    container_name: taskpilot-postgres-db
+    environment:
+      POSTGRES_DB: task-pilot-db
+      POSTGRES_USER: taskpilot_user
+      POSTGRES_PASSWORD: taskpilot_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    restart: always
+
+  # User-Service Application
+  user-service:
+    build:
+      context: ./user-service  # Path to the user-service directory
+      dockerfile: Dockerfile
+    container_name: taskpilot-user-service
+    ports:
+      - "8081:8081"
+    environment:
+      # This overrides the localhost in application.properties
+      # 'db' is the service name of our postgres container
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/task-pilot-db
+      SPRING_DATASOURCE_USERNAME: taskpilot_user
+      SPRING_DATASOURCE_PASSWORD: taskpilot_password
+      # It's good practice to set the JWT secret here
+      JWT_SECRET: "acaa83cc6d82e94a33827f9cbe699d8ff71d3bfbf8e4d7541039afb42ebd311e68726669249bc6d033d3f9536143b79aa071910cb94afa49319acf4268120cde"
+      JWT_EXPIRATION_MS: 86400000
+    depends_on:
+      - db
+    restart: on-failure
+
+volumes:
+  # This named volume will persist the database data
+  postgres-data:
