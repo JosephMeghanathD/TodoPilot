@@ -30,6 +30,7 @@ public class SubTaskService {
 
         SubTask subTask = new SubTask();
         subTask.setTitle(requestDto.getTitle());
+        subTask.setDescription(requestDto.getDescription());
         subTask.setDueDate(requestDto.getDueDate());
         subTask.setTask(parentTask); 
 

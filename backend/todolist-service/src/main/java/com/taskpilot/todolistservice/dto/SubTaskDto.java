@@ -2,6 +2,7 @@ package com.taskpilot.todolistservice.dto;
 
 import lombok.Builder;
 import lombok.Data;
+
 import java.time.LocalDateTime;
 
 @Data
@@ -9,6 +10,7 @@ import java.time.LocalDateTime;
 public class SubTaskDto {
     private Long id;
     private String title;
+    private String description;
     private boolean isCompleted;
     private LocalDateTime dueDate;
     private Long taskId; 

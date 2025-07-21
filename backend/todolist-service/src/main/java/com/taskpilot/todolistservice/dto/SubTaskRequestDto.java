@@ -3,6 +3,7 @@ package com.taskpilot.todolistservice.dto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
+
 import java.time.LocalDateTime;
 
 @Data
@@ -12,4 +13,7 @@ public class SubTaskRequestDto {
     private String title;
 
     private LocalDateTime dueDate;
+
+    @Size(max = 500, message = "Description cannot exceed 500 characters.")
+    private String description;
 }

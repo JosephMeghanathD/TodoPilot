@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/tasks/{taskId}/subtasks")
+@CrossOrigin(origins = "*")
 public class SubTaskController {
 
     @Autowired

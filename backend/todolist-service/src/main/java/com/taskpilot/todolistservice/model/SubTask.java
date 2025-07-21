@@ -3,6 +3,7 @@ package com.taskpilot.todolistservice.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
 import java.time.LocalDateTime;
 
 @Entity
@@ -16,6 +17,8 @@ public class SubTask {
 
     @Column(nullable = false)
     private String title;
+
+    private String description;
 
     private boolean isCompleted = false;
 

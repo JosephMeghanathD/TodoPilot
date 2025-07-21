@@ -15,6 +15,7 @@ public class SubTaskMapper {
                 .id(subTask.getId())
                 .title(subTask.getTitle())
                 .isCompleted(subTask.isCompleted())
+                .description(subTask.getDescription())
                 .dueDate(subTask.getDueDate())
                 .taskId(subTask.getTask().getId())
                 .build();
