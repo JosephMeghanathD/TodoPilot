@@ -96,13 +96,11 @@ public class TaskService {
         return mapToDto(updatedTask);
     }
 
-    Helper method to find a task and ensure ownership
     public Task findTaskByIdAndUserId(Long taskId, Long userId) {
         return taskRepository.findByIdAndUserId(taskId, userId)
                 .orElseThrow(() -> new ResourceNotFoundException("Task not found with id: " + taskId));
     }
 
-    Mapper from Entity to DTO
     private TaskDto mapToDto(Task task) {
         List<SubTaskDto> subTaskDtos = task.getSubTasks().stream()
                 .map(subTaskMapper::toDto)
