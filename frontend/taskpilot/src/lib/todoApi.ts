@@ -2,9 +2,11 @@
 import axios from 'axios';
 import { useAuthStore } from '../store/authStore';
 
-// Points to your todolist-service (running on port 8082)
+// Use environment variable for the URL, with a local fallback
+export const TODO_SERVICE_URL = "https://taskpilot-todolist-service-516671671837.us-central1.run.app";
+
 const todoApiClient = axios.create({
-  baseURL: 'http://localhost:8082/api/v1',
+  baseURL: `${TODO_SERVICE_URL}/api/v1`,
 });
 
 // Use the same interceptor to automatically add the JWT token

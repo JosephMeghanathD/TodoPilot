@@ -1,8 +1,12 @@
+// src/lib/api.ts
 import axios from 'axios';
 import { useAuthStore } from '../store/authStore';
 
+// Use environment variable for the URL, with a local fallback
+export const USER_SERVICE_URL = "https://taskpilot-user-service-516671671837.us-central1.run.app";
+
 const apiClient = axios.create({
-  baseURL: 'http://localhost:8081/api/v1', // Your user-service URL
+  baseURL: `${USER_SERVICE_URL}/api/v1`,
   headers: {
     'Content-Type': 'application/json',
   },
