@@ -1,6 +1,28 @@
 version: '3.8'
 
 services:
+
+  ########################################
+  #         SHARED DATABASE              #
+  ########################################
+
+  # A single PostgreSQL Database for the entire application
+  db:
+    image: postgres:15
+    container_name: taskpilot-shared-db
+    environment:
+      # This is the single database that both services will write their tables to.
+      POSTGRES_DB: taskpilot_db
+      POSTGRES_USER: taskpilot_user
+      POSTGRES_PASSWORD: taskpilot_password
+    ports:
+      # Maps host port 5432 to container port 5432
+      - "5432:5432"
+    volumes:
+      # A single volume to persist all application data
+      - taskpilot-db-data:/var/lib/postgresql/data
+    restart: always
+
   ########################################
   #         APPLICATION SERVICES         #
   ########################################
