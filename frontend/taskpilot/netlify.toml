@@ -1,11 +1,9 @@
 [build]
-    publish = "build"
-    command = "npm run build"
-
-[[plugins]]
-    package = "netlify-plugin-cache-nextjs"
+  command = "npm run build"
+  
+  publish = "dist"
 
 [[redirects]]
-    from = "/*"
-    to = "/index.html"
-    status = 200
+  from = "/*"
+  to = "/index.html"
+  status = 200
