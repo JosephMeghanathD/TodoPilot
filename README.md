@@ -15,8 +15,6 @@
 
 **TaskPilot** is a modern, full-stack, cloud-native To-Do list application built with a microservice architecture. It leverages Java/Spring Boot for the backend, React/TypeScript for the frontend, and integrates with Google's Gemini AI to intelligently decompose complex tasks into manageable sub-tasks.
 
-### [➡️ View Live Demo](https://jdtaskpilot.netlify.app/)
-
 ## Table of Contents
 
 - [Project Description](#project-description)
