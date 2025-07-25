@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/tasks/{taskId}/subtasks")
 @CrossOrigin(origins = "*")
@@ -34,6 +36,16 @@ public class SubTaskController {
             Authentication authentication) {
         Long userId = getUserIdFromAuthentication(authentication);
         SubTaskDto createdSubTask = subTaskService.createSubTask(taskId, userId, requestDto);
+        return new ResponseEntity<>(createdSubTask, HttpStatus.CREATED);
+    }
+
+    @PostMapping("/batch")
+    public ResponseEntity<List<SubTaskDto>> createBatchSubTask(
+            @PathVariable Long taskId,
+            @Valid @RequestBody List<SubTaskRequestDto> requestDto,
+            Authentication authentication) {
+        Long userId = getUserIdFromAuthentication(authentication);
+        List<SubTaskDto> createdSubTask = subTaskService.createBatchSubTask(taskId, userId, requestDto);
         return new ResponseEntity<>(createdSubTask, HttpStatus.CREATED);
     }
 

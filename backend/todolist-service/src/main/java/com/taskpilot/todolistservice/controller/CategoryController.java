@@ -68,9 +68,13 @@ public class CategoryController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCategory(@PathVariable Long id, Authentication authentication) {
+    public ResponseEntity<String> deleteCategory(@PathVariable Long id, Authentication authentication) {
         Long userId = getUserIdFromAuthentication(authentication);
-        categoryService.deleteCategory(id, userId);
+        try {
+            categoryService.deleteCategory(id, userId);
+        } catch (IllegalStateException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
         return ResponseEntity.noContent().build();
     }
 }

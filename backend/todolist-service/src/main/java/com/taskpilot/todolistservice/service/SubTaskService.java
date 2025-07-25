@@ -11,6 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class SubTaskService {
 
@@ -28,14 +31,31 @@ public class SubTaskService {
         
         Task parentTask = taskService.findTaskByIdAndUserId(taskId, userId);
 
+        return createSubTask(requestDto, parentTask);
+    }
+
+    private SubTaskDto createSubTask(SubTaskRequestDto requestDto, Task parentTask) {
         SubTask subTask = new SubTask();
         subTask.setTitle(requestDto.getTitle());
         subTask.setDescription(requestDto.getDescription());
         subTask.setDueDate(requestDto.getDueDate());
-        subTask.setTask(parentTask); 
+        subTask.setTask(parentTask);
 
         SubTask savedSubTask = subTaskRepository.save(subTask);
         return subTaskMapper.toDto(savedSubTask);
+    }
+
+    @Transactional
+    public List<SubTaskDto> createBatchSubTask(Long taskId, Long userId, List<SubTaskRequestDto> requestDto) {
+        Task parentTask = taskService.findTaskByIdAndUserId(taskId, userId);
+
+        List<SubTaskDto> batchDtoList = new ArrayList<>();
+        for (SubTaskRequestDto subTaskRequestDto : requestDto) {
+            SubTaskDto subTask = createSubTask(subTaskRequestDto, parentTask);
+            batchDtoList.add(subTask);
+        }
+
+        return batchDtoList;
     }
 
     @Transactional

@@ -68,7 +68,7 @@ public class AiDecompositionService {
                       "subtasks": [
                         {
                           "title": "<subtask_Title>",
-                          "description": "<subtask_description>",
+                          "description": "<subtask_description maximum 200 characters>",
                           "estimated_time_hours": <float>
                         }
                       ],

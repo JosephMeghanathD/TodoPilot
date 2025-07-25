@@ -1,0 +1,76 @@
+/* src/index.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* Default Theme (Light Mode) */
+  :root {
+    --background: 0 0% 100%; /* White */
+    --foreground: 0 0% 3.9%; /* Black */
+    --border: 0 0% 89.8%;   /* Light Gray */
+    --primary: 0 0% 9%;       /* Dark for buttons */
+    --primary-foreground: 0 0% 98%; /* White text on buttons */
+    --muted: 0 0% 63.9%;      /* Muted Gray */
+    --muted-foreground: 0 0% 45.1%;
+  }
+
+  /* Dark Theme */
+  .dark {
+    --background: 240 10% 3.9%; /* Off-black */
+    --foreground: 0 0% 98%;      /* Off-white */
+    --border: 240 4% 16%;      /* Dark Gray */
+    --primary: 0 0% 98%;         /* White for buttons */
+    --primary-foreground: 240 10% 3.9%; /* Black text on buttons */
+    --muted: 240 4% 36%;       /* Muted Dark Gray */
+    --muted-foreground: 240 5% 65%;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* --- (Keep all your existing animations below this line) --- */
+@layer utilities {
+  .text-shadow-glow {
+    text-shadow: 0 0 8px hsl(var(--primary)), 0 0 16px hsl(var(--primary));
+  }
+}
+
+/* --- KEYFRAME ANIMATIONS --- */
+
+/* Fades in content. Used for the subtitle. */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Blinks the cursor indefinitely */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* --- ANIMATION UTILITY CLASSES --- */
+
+/* Applies a delayed fade-in effect */
+.animate-fade-in-delayed {
+  animation: fadeIn 1s ease-in-out 1.2s forwards; /* Shortened delay */
+  opacity: 0;
+}
+
+/* Applies the persistent blinking animation */
+.animate-blink-cursor {
+  animation: blink 1s step-end infinite;
+}
+
+@layer utilities {
+  /* ... existing text-shadow-glow utility ... */
+
+  .form-container-transition {
+    transition: max-height 0.5s ease-in-out;
+    overflow: hidden;
+  }
+}
+
