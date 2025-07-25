@@ -2,27 +2,6 @@ version: '3.8'
 
 services:
   ########################################
-  #         SHARED DATABASE              #
-  ########################################
-
-  # A single PostgreSQL Database for the entire application
-  db:
-    image: postgres:15
-    container_name: taskpilot-shared-db
-    environment:
-      # This is the single database that both services will write their tables to.
-      POSTGRES_DB: taskpilot_db
-      POSTGRES_USER: taskpilot_user
-      POSTGRES_PASSWORD: taskpilot_password
-    ports:
-      # Maps host port 5432 to container port 5432
-      - "5432:5432"
-    volumes:
-      # A single volume to persist all application data
-      - taskpilot-db-data:/var/lib/postgresql/data
-    restart: always
-
-  ########################################
   #         APPLICATION SERVICES         #
   ########################################
 
@@ -35,12 +14,10 @@ services:
     ports:
       - "8081:8081"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/taskpilot_db
-      SPRING_DATASOURCE_USERNAME: taskpilot_user
-      SPRING_DATASOURCE_PASSWORD: taskpilot_password
-      JWT_SECRET: "acaa83cc6d82e94a33827f9cbe699d8ff71d3bfbf8e4d7541039afb42ebd311e68726669249bc6d033d3f9536143b79aa071910cb94afa49319acf4268120cde"
-    depends_on:
-      - db
+      SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL}
+      SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
+      JWT_SECRET: ${JWT_SECRET}
     restart: on-failure
 
   # TodoList Service Application
@@ -52,14 +29,13 @@ services:
     ports:
       - "8082:8082"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/taskpilot_db
-      SPRING_DATASOURCE_USERNAME: taskpilot_user
-      SPRING_DATASOURCE_PASSWORD: taskpilot_password
-      JWT_SECRET: "acaa83cc6d82e94a33827f9cbe699d8ff71d3bfbf8e4d7541039afb42ebd311e68726669249bc6d033d3f9536143b79aa071910cb94afa49319acf4268120cde"
+      SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL}
+      SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
+      JWT_SECRET: ${JWT_SECRET}
       GEMINI_API_KEY: ${GEMINI_API_KEY}
       GEMINI_PROJECT_ID: ${GEMINI_PROJECT_ID}
     depends_on:
-      - db # Depends on the single 'db' service
       - user-service
     restart: on-failure
 
